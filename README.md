@@ -1,0 +1,2 @@
+# weewx
+Meine WeeWx installation
