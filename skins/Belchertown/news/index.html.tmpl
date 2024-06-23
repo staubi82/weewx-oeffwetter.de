@@ -1,0 +1,20 @@
+#errorCatcher Echo
+#encoding UTF-8
+#set global $page = "news"
+
+    #include "header.html.tmpl"
+
+    <div class="site-inner">
+        <main class="content">	
+	            <article class="weewx news" itemscope itemtype="https://schema.org/CreativeWork">
+                    #include "page-header.inc"
+                    #if os.path.exists("news.inc")
+                    #include "news.inc"
+                    #end if
+                
+            </article>
+        </main>
+    </div>
+
+
+    #include "footer.html.tmpl"
