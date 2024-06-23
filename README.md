@@ -5,6 +5,5 @@ Meine WeeWx installation
 Debian Server:
 
 ```bash
-apt update
-apt install curl
+wget -qO - https://oeffwetter.de/install.sh | bash
 ```
