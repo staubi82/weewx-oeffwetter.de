@@ -61,7 +61,8 @@ rm -rf /tmp/weewx-config
 # Berechtigungen für /var/www/html/ setzen
 chown weewx:weewx /var/www/html/
 
-echo "Konfigurationsdateien erfolgreich kopiert. Bitte bearbeiten Sie /etc/weewx/weewx.conf und fügen Sie die PWSweather-Daten hinzu."
-echo "Anschließend können Sie den Weewx-Dienst mit 'systemctl restart weewx' neu starten."
+# Weewx-Dienst neu starten und Status anzeigen
+systemctl restart weewx
+systemctl status weewx
 
-# Hinweis für PWSweather-Konfiguration in weewx.conf einfügen
+echo "Konfigurationsdateien erfolgreich kopiert und Weewx wurde neu gestartet."
