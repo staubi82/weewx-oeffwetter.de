@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Debug-Modus aktivieren
-set -x
-
 # System aktualisieren und notwendige Pakete installieren
 apt update && apt -y upgrade && apt -y install wget debconf-utils locales git
 apt install python3-ephem python3-pcapy unzip gnupg gpg python3-paho-mqtt nginx -y
@@ -64,27 +61,11 @@ rm -rf /tmp/weewx-config
 # Berechtigungen für /var/www/html/ setzen
 chown weewx:weewx /var/www/html/
 
-# Debug-Modus deaktivieren, bevor Eingabeaufforderungen angezeigt werden
-set +x
+echo "Konfigurationsdateien erfolgreich kopiert. Bitte bearbeiten Sie /etc/weewx/weewx.conf und fügen Sie die PWSweather-Daten hinzu."
+echo "Anschließend können Sie den Weewx-Dienst mit 'systemctl restart weewx' neu starten."
 
-# Abfrage für PWSweather-Daten
-read -p "Sind Sie bereit, Daten an PWSweather.com zu senden? (J/n) " answer
-
-if [[ $answer =~ ^[Jj]$ ]]; then
-    read -p "Station ID: " station_id
-    read -sp "Passwort: " password
-    echo
-
-    # PWSweather-Daten in die Konfigurationsdatei einfügen
-    sed -i "s/^.*enable = .*/        enable = true/" /etc/weewx/weewx.conf
-    sed -i "s/^.*station = .*/        station = $station_id/" /etc/weewx/weewx.conf
-    sed -i "s/^.*password = .*/        password = \"$password\"/" /etc/weewx/weewx.conf
-else
-    sed -i "s/^.*enable = .*/        enable = false/" /etc/weewx/weewx.conf
-fi
-
-# Weewx-Dienst neu starten und Status anzeigen
-systemctl restart weewx
-systemctl status weewx
-
-echo "Konfigurationsdateien erfolgreich kopiert und Weewx wurde neu gestartet."
+# Hinweis für PWSweather-Konfiguration in weewx.conf einfügen
+sed -i '/^\[PWSweather\]/a \
+    enable = false\n\
+    station =\n\
+    password =' /etc/weewx/weewx.conf
