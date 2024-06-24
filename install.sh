@@ -62,7 +62,7 @@ rm -rf /tmp/weewx-config
 chown weewx:weewx /var/www/html/
 
 # Abfrage für PWSweather-Daten
-read -p "Sind Sie bereit, Daten an PWSweather.com zu senden? (J/n) " answer
+read -p "Sind Sie bereit, Daten an PWSweather.com nzu senden? (J/n) " answer
 
 if [[ $answer =~ ^j$ ]]; then
     read -p "Station ID: " station_id
