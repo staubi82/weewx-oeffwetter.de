@@ -58,6 +58,20 @@ fi
 # Temporäres Verzeichnis löschen
 rm -rf /tmp/weewx-config
 
+# Berechtigungen für /var/www/html/ setzen
+chown weewx:weewx /var/www/html/
+
+# PWSweather-Konfiguration abfragen
+read -p "Möchten Sie Daten an PWSweather.com senden? (true/false): " PWS_ENABLE
+read -p "Bitte geben Sie den Stationsnamen ein: " PWS_STATION
+read -sp "Bitte geben Sie das Passwort ein: " PWS_PASSWORD
+echo
+
+# PWSweather-Konfiguration in weewx.conf eintragen
+sed -i "s/^        enable = .*/        enable = $PWS_ENABLE/" /etc/weewx/weewx.conf
+sed -i "s/^        station = .*/        station = $PWS_STATION/" /etc/weewx/weewx.conf
+sed -i "s/^        password = .*/        password = \"$PWS_PASSWORD\"/" /etc/weewx/weewx.conf
+
 # Weewx-Dienst neu starten und Status anzeigen
 systemctl restart weewx
 systemctl status weewx
