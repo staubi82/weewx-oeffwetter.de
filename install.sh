@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Debug-Modus aktivieren
+set -x
+
 # System aktualisieren und notwendige Pakete installieren
 apt update && apt -y upgrade && apt -y install wget debconf-utils locales git
 apt install python3-ephem python3-pcapy unzip gnupg gpg python3-paho-mqtt nginx -y
@@ -61,15 +64,24 @@ rm -rf /tmp/weewx-config
 # Berechtigungen für /var/www/html/ setzen
 chown weewx:weewx /var/www/html/
 
-# Abfrage für PWSweather-Daten
-read -p "Sind Sie bereit, Daten an PWSweather.com nzu senden? (J/n) " answer
+# Debug-Modus deaktivieren, bevor Eingabeaufforderungen angezeigt werden
+set +x
 
-if [[ $answer =~ ^j$ ]]; then
+# Abfrage für PWSweather-Daten
+read -p "Sind Sie bereit, Daten an PWSweather.com zu senden? (J/n) " answer
+
+if [[ $answer =~ ^[Jj]$ ]]; then
     read -p "Station ID: " station_id
-    read -p "Passwort: " password
+    read -sp "Passwort: " password
+    echo
 
     # PWSweather-Daten in die Konfigurationsdatei einfügen
-    echo "[PWSweather]" >> /etc/
+    sed -i "s/^.*enable = .*/        enable = true/" /etc/weewx/weewx.conf
+    sed -i "s/^.*station = .*/        station = $station_id/" /etc/weewx/weewx.conf
+    sed -i "s/^.*password = .*/        password = \"$password\"/" /etc/weewx/weewx.conf
+else
+    sed -i "s/^.*enable = .*/        enable = false/" /etc/weewx/weewx.conf
+fi
 
 # Weewx-Dienst neu starten und Status anzeigen
 systemctl restart weewx
