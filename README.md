@@ -56,5 +56,3 @@ wget -qO - https://raw.githubusercontent.com/staubi82/weewx/main/install.sh | ba
 - Überprüfen und validieren Sie die Inhalte des Skripts, bevor Sie es ausführen, um sicherzustellen, dass es keine unerwünschten Auswirkungen auf Ihr System hat.
 - Stellen Sie sicher, dass die URL sicher und vertrauenswürdig ist, da das Skript direkt ausgeführt wird.
 ```
-
-Dieses Markdown-Dokument kann als `README.md` in deinem GitHub-Repository hinzugefügt werden. Es enthält eine kurze Beschreibung des Skripts und führt die Schritte auf, die das Skript ausführt. Der `wget`-Befehl am Anfang ermöglicht es dem Benutzer, das Skript einfach herunterzuladen und auszuführen.
