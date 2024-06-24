@@ -65,7 +65,3 @@ echo "Konfigurationsdateien erfolgreich kopiert. Bitte bearbeiten Sie /etc/weewx
 echo "Anschließend können Sie den Weewx-Dienst mit 'systemctl restart weewx' neu starten."
 
 # Hinweis für PWSweather-Konfiguration in weewx.conf einfügen
-sed -i '/^\[PWSweather\]/a \
-    enable = false\n\
-    station =\n\
-    password =' /etc/weewx/weewx.conf
